@@ -1,28 +1,33 @@
 package org.example.Controller;
 
+import lombok.RequiredArgsConstructor;
+import org.example.Dto.Operation;
+import org.example.Dto.Quantity;
+import org.example.Dto.SocksDTO;
 import org.example.Model.Socks;
+import org.example.Service.impl.CountingSocksServiceImpl;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/socks")
+@RequiredArgsConstructor
 public class SocksController {
+    private final CountingSocksServiceImpl socksService;
+
     @GetMapping()
-    public String getCountSocks() {
-        return ("Возвращает общее количество носков на складе, " +
-                "соответствующих переданным в параметрах критериям запроса.");
+    public int getCountSocks(@Param("socks") SocksDTO socksDTO, @Param("operation") Operation operation) {
+        return socksService.getSocks(socksDTO, operation);
     }
+
     @PostMapping("/income")
-    public String numberOfSocksIncome(@RequestBody Socks socks){
-        return "Регистрирует приход носков на склад.\n" +
-                "\n" +
-                "Параметры запроса передаются в " +
-                "теле запроса в виде JSON-объекта";
+    public Socks numberOfSocksIncome(@RequestBody Socks socks) {
+        return socksService.incomeSocks(socks);
     }
+
     @PostMapping("/outcome")
-    public String numberOfSocksOutcome(@RequestBody Socks socks){
-        return "Регистрирует отпуск носков со склада. Здесь параметры и " +
-                "результаты аналогичные, но общее количество носков указанного" +
-                " цвета и состава не увеличивается, а уменьшается.";
+    public Socks numberOfSocksOutcome(@RequestBody Socks socks) {
+        return socksService.outcomeSocks(socks);
     }
 
 }
