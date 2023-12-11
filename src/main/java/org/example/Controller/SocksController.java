@@ -16,7 +16,7 @@ public class SocksController {
     private final CountingSocksServiceImpl socksService;
 
     @GetMapping()
-    public int getCountSocks(@Param("socks")  @Valid SocksDTO socksDTO, @Param("operation") Operation operation) {
+    public Integer getCountSocks(@Param("socks")  @Valid SocksDTO socksDTO, @Param("operation") Operation operation) {
         return socksService.getSocks(socksDTO, operation);
     }
 

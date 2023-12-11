@@ -8,6 +8,7 @@ import org.example.Repository.SocksRepository;
 import org.example.Service.CountingSocksService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,18 +39,14 @@ public class CountingSocksServiceImpl implements CountingSocksService {
 
     @Override
     public Integer getSocks(SocksDTO socksDTO, Operation operation) {
-        try {
             if (operation == Operation.moreThen) {
-                return socksRepository.getCountWhenCottonPartMoreThen(socksDTO.getColor(), socksDTO.getCottonPart());
+                return socksRepository.getCountWhenCottonPartMoreThen(socksDTO.getColor(), socksDTO.getCottonPart()).orElseThrow(NotFoundException::new);
             } else if (operation == Operation.lessThen) {
-                return socksRepository.getCountWhenCottonPartLessThen(socksDTO.getColor(), socksDTO.getCottonPart());
+                return socksRepository.getCountWhenCottonPartLessThen(socksDTO.getColor(), socksDTO.getCottonPart()).orElseThrow(NotFoundException::new);
             } else if (operation == Operation.equal) {
-                return socksRepository.getCountWhenCottonPartEqual(socksDTO.getColor(), socksDTO.getCottonPart());
+                return socksRepository.getCountWhenCottonPartEqual(socksDTO.getColor(), socksDTO.getCottonPart()).orElseThrow(NotFoundException::new);
             }
             return null;
-        } catch (NotFoundException e) {
-            throw new NotFoundException();
-        }
     }
 }
 

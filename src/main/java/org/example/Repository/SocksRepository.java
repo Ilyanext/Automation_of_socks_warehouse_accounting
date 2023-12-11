@@ -14,18 +14,16 @@ import java.util.Optional;
 @Repository
 public interface SocksRepository extends JpaRepository<Socks, Integer> {
 
-   Optional<Socks> findByColorAndCottonPart(String color, int cottonPart);
-
     @Query(value = "select sum (quantity) from socks \n" +
             "where color= :color and cotton_part = :cotton_part", nativeQuery = true)
-    int getCountWhenCottonPartEqual(@Param("color") String color, @Param("cotton_part") int cottonPart);
+    Optional<Integer>  getCountWhenCottonPartEqual(@Param("color") String color, @Param("cotton_part") int cottonPart);
 
     @Query(value = "select sum (quantity) from socks \n" +
             "where color= :color and cotton_part > :cotton_part", nativeQuery = true)
-    int getCountWhenCottonPartMoreThen(@Param("color") String color, @Param("cotton_part") int cottonPart);
+    Optional<Integer> getCountWhenCottonPartMoreThen(@Param("color") String color, @Param("cotton_part") int cottonPart);
 
     @Query(value = "select sum (quantity) from socks \n" +
             "where color= :color and cotton_part < :cotton_part", nativeQuery = true)
-    int getCountWhenCottonPartLessThen(@Param("color") String color, @Param("cotton_part") int cottonPart);
+    Optional<Integer> getCountWhenCottonPartLessThen(@Param("color") String color, @Param("cotton_part") int cottonPart);
 
 }
