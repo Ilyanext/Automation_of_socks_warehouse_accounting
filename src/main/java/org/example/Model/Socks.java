@@ -2,6 +2,9 @@ package org.example.Model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,8 +21,13 @@ public class Socks {
     private int id;
     @Column(name = "color")
     private String color;
+
     @Column(name = "cotton_Part")
+    @PositiveOrZero(message = "Не может быть меньше 0")
+    @Max(value = 100, message = "Максимальное число 100")
+    @Min(value = 0, message = "Минимальное число 0")
     private int cottonPart;
+
     @Column(name = "quantity")
     private int quantity;
 

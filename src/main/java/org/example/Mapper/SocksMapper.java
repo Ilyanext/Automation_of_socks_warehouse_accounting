@@ -1,11 +1,10 @@
 package org.example.Mapper;
 
-import org.example.Dto.Quantity;
 import org.example.Dto.SocksDTO;
 import org.example.Model.Socks;
 
 public class SocksMapper {
-    public static SocksDTO toSocks(Socks socks) {
+    public static SocksDTO toSocksDTO(Socks socks) {
         SocksDTO socksDTO = new SocksDTO();
         socksDTO.setColor(socks.getColor());
         socksDTO.setCottonPart(socks.getCottonPart());
